@@ -2,21 +2,19 @@ package com.project.api_gateway_service.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.connection.ReactiveRedisConnectionFactory;
-import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
-import org.springframework.data.redis.core.ReactiveStringRedisTemplate;
+import org.springframework.core.io.ClassPathResource;
+
+import org.springframework.data.redis.core.script.RedisScript;
+
+import java.util.List;
 
 @Configuration
 public class RedisConfig {
 
     @Bean
-    public ReactiveRedisConnectionFactory redisConnectionFactory() {
-        return new LettuceConnectionFactory("localhost", 6379);
-    }
-
-    @Bean
-    public ReactiveStringRedisTemplate reactiveStringRedisTemplate(
-            ReactiveRedisConnectionFactory factory) {
-        return new ReactiveStringRedisTemplate(factory);
+    public RedisScript<List> tokenBucketScript() {
+        return RedisScript.of(new ClassPathResource("lua/token_bucket.lua"),
+                List.class
+        );
     }
 }
