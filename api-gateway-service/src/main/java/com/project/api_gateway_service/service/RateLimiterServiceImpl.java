@@ -22,11 +22,11 @@ public class RateLimiterServiceImpl implements RateLimiterService{
     RedisScript<List> tokenBucketScript;
 
     private static final long capacity = 100;
-    private static final long refill_rate = 10;
+    private static final long refill_rate = 100;
 
     @Override
     public Mono<RateLimitStatus> checkRateLimit(String key) {
-        String redisKey = "rate_limit"  + key;
+        String redisKey = "rate_limit:"  + key;
 
         long now = Instant.now().getEpochSecond();
         long ttl = (capacity / refill_rate) * 2;

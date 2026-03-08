@@ -28,8 +28,8 @@ end
 local seconds_to_full = math.ceil((capacity - tokens) / refill_rate)
 local reset_time = now + seconds_to_full
 
-redis.call("HMGET", key, "tokens", tokens, "timestamp", now)
+redis.call("HMSET", key, "tokens", tokens, "timestamp", now)
 
 redis.call("EXPIRE", key, ttl)
 
-return {allowed, tokens, refill_rate}
+return {allowed, tokens, reset_time}

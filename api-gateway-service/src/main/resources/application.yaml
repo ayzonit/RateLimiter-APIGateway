@@ -4,6 +4,39 @@ spring:
 
   data:
     redis:
-      host: localhost
+      host: redis
       port: 6379
       timeout: 2000
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://auth-service:8081/auth/jwks-json
+
+  cloud:
+    gateway:
+      routes:
+        - id: like-service
+          uri: http://like-service:8082
+          predicates:
+            - Path=/api/likes/**
+
+        - id: comment-service
+          uri: http://comment-service:8083
+          predicates:
+            - Path=/api/comments/**
+
+        - id: share-service
+          uri: http://share-service:8084
+          predicates:
+            - Path=/api/share/**
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    reactor.netty: DEBUG
+
+
+server:
+  port: 8080

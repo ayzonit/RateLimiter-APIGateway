@@ -21,17 +21,17 @@ public class RateLimitHeaderFilter implements GlobalFilter, Ordered {
             if (rateLimitStatus != null) {
 
                 exchange.getResponse().getHeaders().add(
-                        "Request Limit:",
+                        "X-RateLimit-Limit",
                         String.valueOf(rateLimitStatus.getLimit())
                 );
 
                 exchange.getResponse().getHeaders().add(
-                        "Remaining tokens:",
+                        "RateLimit-Remaining",
                         String.valueOf(rateLimitStatus.getRemainingTokens())
                 );
 
                 exchange.getResponse().getHeaders().add(
-                        "Reset:",
+                        "X-RateLimit-Reset",
                         String.valueOf(rateLimitStatus.getResetTime())
                 );
             }

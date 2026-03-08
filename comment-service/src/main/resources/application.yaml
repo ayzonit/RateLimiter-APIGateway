@@ -1,3 +1,7 @@
 spring:
   application:
     name: comment-service
+
+server:
+  port: 8083
+

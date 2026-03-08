@@ -20,11 +20,15 @@ public class JwtService {
         Instant now = Instant.now();
 
         JwtClaimsSet claims = JwtClaimsSet.builder()
+                .issuer("http://auth-service:8081")
                 .subject(user.getUserId().toString())
                 .claim("role", user.getRole().name())
                 .issuedAt(now)
                 .expiresAt(now.plusSeconds(900))
                 .build();
+
+        System.out.println("Claims before encoding: " + claims.getClaims());
+        System.out.println("Issuer: " + claims.getIssuer());
 
         JwtEncoderParameters jwtEncoderParameters = JwtEncoderParameters.from(claims);
 
