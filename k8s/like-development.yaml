@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: like-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: like-service
+  template:
+    metadata:
+      labels:
+        app: like-service
+    spec:
+      containers:
+        - name: like-service
+          image: cloud-rate-limiter-platform-like-service
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8082

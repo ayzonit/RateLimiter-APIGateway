@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: share-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: share-service
+  template:
+    metadata:
+      labels:
+        app: share-service
+    spec:
+      containers:
+        - name: share-service
+          image: cloud-rate-limiter-platform-share-service
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8084
